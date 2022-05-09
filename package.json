@@ -1,0 +1,21 @@
+{
+  "name": "micro_service1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon -r esm app.js",
+    "server": "node -r esm app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "esm": "^3.2.25",
+    "express": "^4.18.1",
+    "nodemon": "^2.0.16",
+    "save": "^2.5.0"
+  }
+}

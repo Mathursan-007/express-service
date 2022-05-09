@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: express-service
+spec:
+  selector:
+    matchLabels:
+      app: express-service
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: express-service
+    spec:
+      containers:
+        - name: express-service
+          image: dockmathu/express-service:v2
+          ports:
+            - containerPort: 8080
+
