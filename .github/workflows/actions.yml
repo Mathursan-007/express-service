@@ -32,7 +32,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{secrets.DOCKER_HUB_USERNAME}}/paymentservice:${{git rev-parse --short HEAD}}
+          tags: ${{secrets.DOCKER_HUB_USERNAME}}/paymentservice:$(git rev-parse --short HEAD)
 
 
      
