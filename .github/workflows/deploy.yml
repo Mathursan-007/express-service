@@ -75,7 +75,7 @@ jobs:
         context: .
         file: ./Dockerfile
         push: true
-        tags: ${{secrets.DOCKER_HUB_USERNAME}}/paymentservice:${{ github.sha }}
+        tags: dockmathu/paymentservice:${{ github.sha }}
 
     # Push the Docker image to Google Artifact Registry
 #    - name: Publish
@@ -92,7 +92,8 @@ jobs:
     - name: Deploy
       run: |-
         # replacing the image name in the k8s template
-        ./kustomize edit set image LOCATION-${{secrets.DOCKER_HUB_USERNAME}}/paymentservice:${{ github.sha }}
+        cd k8s
+        ./kustomize edit set image LOCATION-dockmathu/paymentservice:${{ github.sha }}
         ./kustomize build . | kubectl apply -f -
         kubectl rollout status deployment/$DEPLOYMENT_NAME
         kubectl get services -o wide
