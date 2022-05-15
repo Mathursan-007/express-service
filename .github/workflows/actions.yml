@@ -1,12 +1,19 @@
 name: cicd
 
-on: 
+on:
   push:
     branches: [master]
   pull_request:
     branches: [master]
-    
-    
+
+env:
+  PROJECT_ID: ${{ secrets.PROJECT_ID }}
+  CLUSTER_NAME: abc-store-cluster
+  CLUSTER_ZONE: asia-southeast2
+  DEPLOYMENT_NAME: payment-service
+  IMAGE: dockmathu/paymentservice:${{ github.sha }}
+
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -20,11 +27,7 @@ jobs:
         with:
           username: ${{secrets.DOCKER_HUB_USERNAME}}
           password: ${{secrets.DOCKER_HUB_ACCESS_TOKEN}}
-           
-      -  
-        name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-         
+
       -
         name: Build and push
         uses: docker/build-push-action@v2
@@ -33,6 +36,42 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: ${{secrets.DOCKER_HUB_USERNAME}}/paymentservice:${{ github.sha }}
+
+  deployment:
+    name: Deploy to cluster
+    runs-on: 'ubuntu-latest'
+    needs: [ docker-image ]
+    steps:
+      - name: Checkout working branch
+        uses: actions/checkout@v1
+
+      - name: Set Cluster credentials
+        run: |
+          echo ::set-env name=CLUSTER_NAME::acme-gke-${{ env.CLUSTER_NAME }}
+          echo ::set-env name=CLUSTER_ZONE::${{env.CLUSTER_ZONE}}
+          echo ::set-env name=PROJECT_NAME::kubernetes project
+
+      - name: Install kubectl
+      run: |
+        sudo apt-get install kubectl
+      - name: Install helm
+        run: |
+          curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+          chmod 700 get_helm.sh
+          ./get_helm.sh    
+
+      - name: Deploy Release on cluster
+      env:
+        GCLOUD_KEY: ${{ secrets.GCLOUD_KEY }}
+      run: |
+        echo "$GCLOUD_KEY" | base64 --decode > ${HOME}/gcloud.json
+        gcloud auth activate-service-account --key-file=${HOME}/gcloud.json
+        gcloud auth configure-docker
+        gcloud container clusters get-credentials \
+        ${{ env.CLUSTER_NAME }} --zone 
+        ${{ env.CLUSTER_ZONE }} --project kubernetes project
+        
+
 
 
      
