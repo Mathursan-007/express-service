@@ -43,7 +43,8 @@ jobs:
     - id: 'auth'
       uses: 'google-github-actions/auth@v0'
       with:
-        credentials_json: '${{ secrets.GCLOUD_KEY }}'
+         workload_identity_provider: 'projects/123456789/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
+         service_account: 'k8s-894@golden-sandbox-343808.iam.gserviceaccount.com'
 
     - name: Docker configuration
       run: |-
