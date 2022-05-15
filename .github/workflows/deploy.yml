@@ -18,12 +18,12 @@ on:
       - master
 
 env:
-  PROJECT_ID: ${{ secrets.PROJECT_ID }}
-  GAR_LOCATION: us-central1
-  GKE_CLUSTER: cluster-1
-  GKE_ZONE: us-central1-c
-  DEPLOYMENT_NAME: gke-test
-  REPOSITORY: samples
+  PROJECT_ID: ${{secrets.PROJECT_ID}}
+  GAR_LOCATION: us-west1
+  GKE_CLUSTER: abc-store-cluster
+  GKE_ZONE: asia-southeast2
+  DEPLOYMENT_NAME: deployment
+  REPOSITORY: paymentservice
   IMAGE: paymentservice
 
 jobs:
