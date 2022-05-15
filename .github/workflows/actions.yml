@@ -36,16 +36,3 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: ${{secrets.DOCKER_HUB_USERNAME}}/paymentservice:${{ github.sha }}
-
-      -
-         name: Kuberentes (k8s) cli - kubectl
-         uses: actions-hub/kubectl@v1.21.2
-
-      -
-        name: connect to k8s
-        uses: gcloud container clusters get-credentials abc-store-cluster --region asia-southeast2 --project golden-sandbox-343808
-
-
-     
-    
-
