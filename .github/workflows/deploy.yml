@@ -39,6 +39,8 @@ jobs:
         tags: ${{secrets.DOCKER_HUB_USERNAME}}/paymentservice:0.0.1
 
     - name: Update image tag
+      env:
+        PROJECT_ID: ${{ env.PROJECT_ID }}
       run: kubectl set image deployment/payment-service payment-service=${{secrets.DOCKER_HUB_USERNAME}}/paymentservice:latest
     
   Deploy:
