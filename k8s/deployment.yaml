@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: payment-service
-          image: dockmathu/paymentservice:${{ github.sha }}
+          image: dockmathu/paymentservice:latest
           ports:
             - containerPort: 8080
 
