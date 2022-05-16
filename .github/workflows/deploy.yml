@@ -37,13 +37,6 @@ jobs:
         file: ./Dockerfile
         push: true
         tags: ${{secrets.DOCKER_HUB_USERNAME}}/paymentservice:0.0.1
-
-    - name: Update image tag
-      env:
-        PROJECT_ID: ${{ env.PROJECT_ID }}
-      run: |
-        kubectl apply -f k8s/
-        kubectl set image deployment/payment-service payment-service=${{secrets.DOCKER_HUB_USERNAME}}/paymentservice:latest
     
   Deploy:
     needs: build
@@ -58,7 +51,7 @@ jobs:
         CLUSTER_NAME: ${{ env.GKE_CLUSTER }}
         ZONE_NAME: ${{ env.GKE_ZONE }}
       with:
-        args: apply -f k8s/
+        args: set image deployment/payment-service payment-service=dockmathu/paymentservice:latest;apply -f k8s/
 
 
 
