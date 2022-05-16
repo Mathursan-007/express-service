@@ -14,7 +14,8 @@ spec:
     spec:
       containers:
         - name: payment-service
-          image: dockmathu/paymentservice:latest
+          image: dockmathu/paymentservice
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
 
