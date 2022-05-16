@@ -38,6 +38,8 @@ jobs:
         push: true
         tags: ${{secrets.DOCKER_HUB_USERNAME}}/paymentservice:0.0.1
 
+    - name: Update image tag
+      run: "kubectl set image deployment/payment-service payment-service=dockmathu/paymentservice:latest"
     
   Deploy:
     needs: build
@@ -52,7 +54,7 @@ jobs:
         CLUSTER_NAME: ${{ env.GKE_CLUSTER }}
         ZONE_NAME: ${{ env.GKE_ZONE }}
       with:
-        args: "set image deployment/payment-service payment-service=dockmathu/paymentservice:latestapply;apply -f k8s/"
+        args: apply -f k8s/
 
 
 
