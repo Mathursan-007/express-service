@@ -62,7 +62,6 @@ jobs:
       with:
         args: apply -f k8s/
 
-    # Deploy the Docker image to the GKE cluster
     - name: Deploy
       run: |-
         # replacing the image name in the k8s template
