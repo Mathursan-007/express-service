@@ -36,7 +36,7 @@ jobs:
         context: .
         file: ./Dockerfile
         push: true
-        tags: ${{secrets.DOCKER_HUB_USERNAME}}/paymentservice:0.0.1
+        tags: ${{secrets.DOCKER_HUB_USERNAME}}/paymentservice:${github.sha}
     
   Deploy:
     needs: build
@@ -51,7 +51,7 @@ jobs:
         CLUSTER_NAME: ${{ env.GKE_CLUSTER }}
         ZONE_NAME: ${{ env.GKE_ZONE }}
       with:
-        args: set image deployment/payment-service payment-service=dockmathu/paymentservice:latest&&kubectl apply -f k8s/
+        args: set image deployment/payment-service payment-service=dockmathu/paymentservice:${github.sha}&&kubectl apply -f k8s/
 
 
 
