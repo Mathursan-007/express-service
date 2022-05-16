@@ -53,11 +53,11 @@ jobs:
       run: |-
         gcloud --quiet auth configure-docker $GAR_LOCATION-docker.pkg.dev
 
-    - name: Set up GKE credentials
-      uses: google-github-actions/get-gke-credentials@v0
-      with:
-        cluster_name: ${{ env.GKE_CLUSTER }}
-        location: ${{ env.GKE_ZONE }}
+#    - name: Set up GKE credentials
+#      uses: google-github-actions/get-gke-credentials@v0
+#      with:
+#        cluster_name: ${{ env.GKE_CLUSTER }}
+#        location: ${{ env.GKE_ZONE }}
 
     - name: Build
       run: |-
