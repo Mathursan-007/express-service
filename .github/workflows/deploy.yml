@@ -51,7 +51,7 @@ jobs:
         CLUSTER_NAME: ${{ env.GKE_CLUSTER }}
         ZONE_NAME: ${{ env.GKE_ZONE }}
       with:
-        args: set image deployment/payment-service payment-service=dockmathu/paymentservice:${{ github.sha }}&&kubectl apply -f k8s/
+        args: set image deployment/payment-service payment-service=${{secrets.DOCKER_HUB_USERNAME}}/paymentservice:${{ github.sha }}||kubectl apply -f k8s/
 
 
 
