@@ -1,4 +1,4 @@
-name: NodeJS CI/CD Pipeline
+name: Payment-Service CI/CD Pipeline
 
 on:
   push:
